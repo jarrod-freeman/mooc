@@ -1,0 +1,16 @@
+note over browser:
+user enters note in textbox and clicks the save button to submit the form
+end note
+
+note over browser:
+the onsubmit event handler that was registered on the form is executed.
+the page creates a new note object and pushes it to an array of notes, then redraws the notes.
+finally, the new note is pushed to the server
+end note
+
+browser->server: HTTP POST https://fullstack-exampleapp.herokuapp.com/new_note_spa
+server->browser: json response that states the note was sucessfully saved on the server
+
+note over server:
+server creates a new note object from the request body and appends it to the array of notes
+end note
