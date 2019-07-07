@@ -15,9 +15,9 @@ const Display = ({text}) => {
 }
 
 const Statistics = ({good, neutral, bad}) => {
-    const calcAverage = () => {
-        let total = good + bad + neutral;
+    let total = good + bad + neutral;
 
+    const calcAverage = () => {
         if(total === 0){
             return 0;
         }
@@ -28,8 +28,6 @@ const Statistics = ({good, neutral, bad}) => {
     }
 
     const calcPositive = () => {
-        let total = good + bad + neutral;
-
         if(total === 0){
             return 0;
         }
@@ -37,6 +35,17 @@ const Statistics = ({good, neutral, bad}) => {
         let positive = (good / total) * 100;
 
         return positive;
+    }
+
+    if(total === 0){
+        return(
+            <>
+                <h1>statistics</h1>
+                <div>
+                    No feedback given
+                </div>
+            </>
+        )
     }
 
     return (
