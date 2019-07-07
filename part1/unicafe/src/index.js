@@ -8,9 +8,9 @@ const Button = ({clickHandler, text}) => {
     )
 }
 
-const Display = ({text}) => {
+const Statistic = ({text, value}) => {
     return (
-        <div>{text}</div>
+        <div>{text} {value}</div>
     )
 }
 
@@ -51,12 +51,12 @@ const Statistics = ({good, neutral, bad}) => {
     return (
         <>
             <h1>statistics</h1>
-            <Display text={'good ' + good} />
-            <Display text={'neutral ' + neutral} />
-            <Display text={'bad ' + bad} />
-            <Display text={'all ' + (good + neutral + bad)} />
-            <Display text={'average ' + calcAverage()} />
-            <Display text={'positive ' + calcPositive() + '%'} />
+            <Statistic text='good' value={good} />
+            <Statistic text='neutral' value={neutral} />
+            <Statistic text='bad' value={bad} />
+            <Statistic text='all' value={good + neutral + bad} />
+            <Statistic text='average' value={calcAverage()} />
+            <Statistic text='positive' value={calcPositive() + '%'} />
         </>
     )
 }
