@@ -10,23 +10,35 @@ const App = (props) => {
         let random = Math.floor(Math.random() * 6);
 
         setSelected(random);
-    }
+    };
 
     const handleVote = () => {
         let copy = new Array(...votes);
         copy[selected]++;
 
         setVotes(copy)
-    }
+    };
+
+    const getMostVotedAnecdote = () => {
+        let max = Math.max(...votes);
+        let index = votes.indexOf(max);
+        
+        return props.anecdotes[index];
+    };
 
     return (
         <div>
+            <h1>Anecdote of the day</h1>
             <div>
                 {props.anecdotes[selected]}
                 <div>has {votes[selected]} votes</div>
             </div>
             <button onClick={handleVote}>vote</button>
             <button onClick={getNext}>next anecdote</button>
+            <h1>Anecdote with the most votes</h1>
+            <div>
+                {getMostVotedAnecdote()}
+            </div>
         </div>
     )
 };
