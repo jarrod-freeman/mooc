@@ -35,14 +35,7 @@ const Content = (props) => {
 }
 
 const Total = (props) =>{
-    const total = () => {
-        let sum = 0;
-        for(let i = 0; i < props.parts.length; i++){
-            sum += props.parts[i].exercises;
-        }
-
-        return sum;
-    }
+    const total = () => props.parts.reduce((sum, part) => sum + part.exercises, 0);
 
     if(props.parts === undefined || props.parts.length === 0){
         return null;
