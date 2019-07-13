@@ -10,22 +10,26 @@ const CountryDetails = ({country}) => {
         return country.languages.map(language => <li key={language.name}>{language.name}</li>);
     }
 
-    return (
-        <div>
-            <h1>{country.name}</h1>
+    if(country){
+        return (
             <div>
-                capital: {country.capital}                
+                <h1>{country.name}</h1>
+                <div>
+                    capital: {country.capital}                
+                </div>
+                <div>
+                    population: {country.population}
+                </div>
+                <h2>languages</h2>
+                <ul>
+                    {languageRows()}
+                </ul>
+                <img src={country.flag} style={{"maxWidth": "200px"}} alt="country flag" />
             </div>
-            <div>
-                population: {country.population}
-            </div>
-            <h2>languages</h2>
-            <ul>
-                {languageRows()}
-            </ul>
-            <img src={country.flag} style={{"maxWidth": "200px"}} alt="country flag" />
-        </div>
-    );
+        );
+    }
+
+    return null
 };
 
 export default CountryDetails;

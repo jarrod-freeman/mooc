@@ -1,10 +1,19 @@
 import React from 'react';
-import CountryDetails from './CountryDetails';
 
-const CountryList = ({countries}) => {
+const CountryList = ({countries, setCountryToDisplay}) => {
 
-    const countryRows = () => countries.map(country => <div key={country.name}>{country.name}</div>);
-
+    const countryRows = () => {
+        return countries.map(country => {
+            return <div key={country.name}>
+                        {country.name} 
+                        <button onClick={() => { 
+                                    setCountryToDisplay(country);
+                                }
+                            }>show</button>
+                    </div>
+        });
+    }
+    
     if(countries !== undefined){
         if(countries.length > 10){
             return (
@@ -19,13 +28,6 @@ const CountryList = ({countries}) => {
                     {countryRows()}
                 </div>
             );
-        }
-        else if(countries.length === 1){
-            return (
-                <div>
-                    <CountryDetails country={countries[0]} />
-                </div>
-            )
         }
     }
 
