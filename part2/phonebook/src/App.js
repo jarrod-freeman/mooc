@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import Directory from './components/Directory';
 import Filter from './components/Filter';
 import PersonForm from './components/PersonForm';
-import PersonService from './services/PersonService';
 import personService from './services/PersonService';
 
 const App = () => {
@@ -56,7 +55,7 @@ const App = () => {
         newNumber={newNumber} onNumberChange={numberChangedHandler} 
         onFormSubmit={submitNewName} />
       <h2>Numbers</h2>
-      <Directory persons={persons} filter={filter} />
+      <Directory persons={persons} setPersons={setPersons} filter={filter} />
     </div>
   );
 };
