@@ -25,20 +25,29 @@ const App = () => {
   const submitNewName = (event) => {
     event.preventDefault();
 
-    if(!persons.find((person) => person.name === newName)){
-      let person = {
+    const person = persons.find(person => person.name === newName);
+
+    if(!person){
+      let newPerson = {
         name: newName,
         number: newNumber
       };
 
-      personService.create(person)
-        .then(newPerson => {
-          setPersons(persons.concat(newPerson));
+      personService.create(newPerson)
+        .then(addedPerson => {
+          setPersons(persons.concat(addedPerson));
           resetForm();
         });
     }
     else{
-      alert(`${newName} is already add to phonebook`);
+      if(window.confirm(`${person.name} is already added to phonebook, replace the old number with a new one?`)){
+        const personToUpdate = { ...person, number: newNumber };
+        personService.update(personToUpdate)
+          .then(updatedPerson => {
+            setPersons(persons.map(person => person.id !== personToUpdate.id ? person : updatedPerson))
+            resetForm('');
+          })
+      }
     }
   };
 
