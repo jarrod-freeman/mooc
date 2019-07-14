@@ -11,6 +11,7 @@ const App = () => {
   const [newNumber, setNewNumber] = useState('');
   const [filter, setFilter] = useState('');
   const [message, setMessage] = useState(null);
+  const [messageType, setMessageType] = useState(null);
 
   useEffect(() => {
     personService.getAll()
@@ -37,6 +38,7 @@ const App = () => {
 
       personService.create(newPerson)
         .then(addedPerson => {
+          setMessageType('notification');
           setMessage(`Added ${addedPerson.name}`);
           setPersons(persons.concat(addedPerson));
           resetForm();
@@ -58,6 +60,21 @@ const App = () => {
     }
   };
 
+  const deletePerson = (personToDelete) => {
+    if(window.confirm(`Delete ${personToDelete.name}?`)){
+      personService.deletePerson(personToDelete.id)
+        .then(success => {
+          if(success){
+            setPersons(persons.filter(person => person.id !== personToDelete.id));
+          }
+          else{
+            setMessageType('error');
+            setMessage(`Information of ${personToDelete.name} has already been removed form server`);
+          }
+        });
+    }
+  };
+
   const filterChangeHandler = (e) => setFilter(e.target.value);
   const nameChangedHandler = (e) => setNewName(e.target.value);
   const numberChangedHandler = (e) => setNewNumber(e.target.value);
@@ -65,14 +82,14 @@ const App = () => {
   return (
     <div>
       <h2>Phonebook</h2>
-      <Notification message={message} />
+      <Notification message={message} messageType={messageType} />
       <Filter onFilterChange={filterChangeHandler} />
       <h2>add a new</h2>
       <PersonForm newName={newName} onNameChange={nameChangedHandler} 
         newNumber={newNumber} onNumberChange={numberChangedHandler} 
         onFormSubmit={submitNewName} />
       <h2>Numbers</h2>
-      <Directory persons={persons} setPersons={setPersons} filter={filter} />
+      <Directory persons={persons} filter={filter} deleteHandler={deletePerson} />
     </div>
   );
 };

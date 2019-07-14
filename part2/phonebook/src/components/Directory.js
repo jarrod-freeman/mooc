@@ -1,25 +1,14 @@
 import React from 'react';
 import Person from './Person';
-import personService from '../services/PersonService';
 
-const Directory = ({persons, setPersons, filter}) => {
-  const deletePerson = (personToDelete) => {
-    if(window.confirm(`Delete ${personToDelete.name}?`)){
-      personService.deletePerson(personToDelete.id)
-        .then(success => {
-          if(success){
-            setPersons(persons.filter(person => person.id !== personToDelete.id));
-          }
-        });
-    }
-  };
-
+const Directory = ({persons, filter, deleteHandler}) => {
+  
   const personRows = () => {
       return persons.filter(person => {
         return person.name.toLowerCase().indexOf(filter.toLowerCase()) > -1
       }).map(person => {
         return (
-          <Person key={person.name} person={person} deleteHandler={() => deletePerson(person)} />
+          <Person key={person.name} person={person} deleteHandler={() => deleteHandler(person)} />
         )
       });
   };

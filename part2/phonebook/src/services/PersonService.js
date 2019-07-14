@@ -27,6 +27,9 @@ const deletePerson = (id) => {
     return axios.delete(`${baseUrl}/${id}`)
         .then(() => {
             return true;
+        })
+        .catch(() => {
+            return false;
         });
 };
 
