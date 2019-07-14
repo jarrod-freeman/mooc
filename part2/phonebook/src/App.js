@@ -3,12 +3,14 @@ import Directory from './components/Directory';
 import Filter from './components/Filter';
 import PersonForm from './components/PersonForm';
 import personService from './services/PersonService';
+import Notification from './components/Notification';
 
 const App = () => {
   const [persons, setPersons] = useState([]);
   const [newName, setNewName] = useState('');
   const [newNumber, setNewNumber] = useState('');
   const [filter, setFilter] = useState('');
+  const [message, setMessage] = useState(null);
 
   useEffect(() => {
     personService.getAll()
@@ -35,8 +37,13 @@ const App = () => {
 
       personService.create(newPerson)
         .then(addedPerson => {
+          setMessage(`Added ${addedPerson.name}`);
           setPersons(persons.concat(addedPerson));
           resetForm();
+
+          setTimeout(() => {
+            setMessage(null);
+          }, 5000);
         });
     }
     else{
@@ -58,6 +65,7 @@ const App = () => {
   return (
     <div>
       <h2>Phonebook</h2>
+      <Notification message={message} />
       <Filter onFilterChange={filterChangeHandler} />
       <h2>add a new</h2>
       <PersonForm newName={newName} onNameChange={nameChangedHandler} 

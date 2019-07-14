@@ -5,8 +5,12 @@ import personService from '../services/PersonService';
 const Directory = ({persons, setPersons, filter}) => {
   const deletePerson = (personToDelete) => {
     if(window.confirm(`Delete ${personToDelete.name}?`)){
-      personService.deletePerson(personToDelete);
-      setPersons(persons.filter(person => person.id !== personToDelete.id));
+      personService.deletePerson(personToDelete.id)
+        .then(success => {
+          if(success){
+            setPersons(persons.filter(person => person.id !== personToDelete.id));
+          }
+        });
     }
   };
 
