@@ -25,6 +25,10 @@ const people = [
       }
 ];
 
+app.get('/info', (request, response) => {
+    response.send(`<div>Phonebook has info for ${people.length} people</div><p>${new Date()}</p>`);
+});
+
 app.get('/api/persons', (request, response) => {
     response.json(people);
 });
