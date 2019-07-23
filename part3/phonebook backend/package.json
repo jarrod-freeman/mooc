@@ -7,9 +7,9 @@
     "start": "node index.js",
     "watch": "nodemon index.js",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build:ui": "",
-    "deploy": "git subtree push --prefix \"part3/phonebook backend\" heroku master",
-    "deplay:full": "npm run build:ui && git add . git commit -m uibuild && git push && npm run deploy",
+    "build:ui": "rmdir build /S /Q && cd ../../part2/phonebook && npm run build --prod && xcopy .\\build \"..\\..\\part3\\phonebook backend\\build\" /i /E",
+    "deploy": "cd ../.. && git subtree push --prefix \"part3/phonebook backend\" heroku master",
+    "deploy:full": "npm run build:ui && git add . git commit -m uibuild && git push && npm run deploy",
     "logs:prod": "heroku logs --tail"
   },
   "author": "Jarrod Freeman",
