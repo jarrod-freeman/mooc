@@ -27,7 +27,12 @@ app.get('/info', (request, response) => {
 app.get('/api/persons', (request, response, next) => {
     Person.find({})
         .then(people => {
-            response.json(people.map(person => person.toJSON()));
+            if(people){
+                response.json(people.map(person => person.toJSON()));
+            }
+            else{
+                response.status(204).end();
+            }
         })
         .catch(error => next(error));
 });
@@ -60,12 +65,6 @@ app.post('/api/persons', (request, response, next) => {
         });
     }
 
-    // if(persons.find(person => person.name === body.name)){
-    //     return response.status(400).json({
-    //         error: 'name must be unique'
-    //     });
-    // }
-
     let person = new Person({
         name: body.name,
         number: body.number
@@ -74,6 +73,20 @@ app.post('/api/persons', (request, response, next) => {
     person.save()
         .then(savedPerson => {
             response.json(savedPerson.toJSON());
+        })
+        .catch(error => next(error));
+});
+
+app.put('/api/persons/:id', (request, response, next) => {
+    const body = request.body;
+
+    const person = {
+        number: body.number
+    };
+
+    Person.findByIdAndUpdate(request.params.id, person, { new: true })
+        .then(updatedPerson => {
+            response.json(updatedPerson.toJSON());
         })
         .catch(error => next(error));
 });
