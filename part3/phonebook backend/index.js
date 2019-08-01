@@ -20,8 +20,17 @@ app.use(cors());
 app.use(morgan(':method :url :status :res[content-length] - :response-time ms :body'));
 app.use(express.static('build'));
 
-app.get('/info', (request, response) => {
-    response.send(`<div>Phonebook has info for ${people.length} people</div><p>${new Date()}</p>`);
+app.get('/info', (request, response, next) => {
+    Person.find({})
+        .then(people => {
+            if(people){
+                response.send(`<div>Phonebook has info for ${people.length} people</div><p>${new Date()}</p>`);
+            }
+            else{
+                response.send(`<div>Phonebook has info for 0 people</div><p>${new Date()}</p>`);
+            }
+        })
+        .catch(error => next(error));
 });
 
 app.get('/api/persons', (request, response, next) => {
