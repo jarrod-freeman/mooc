@@ -10,7 +10,8 @@
     "build:ui": "rmdir build /S /Q && cd ../../part2/phonebook && npm run build --prod && xcopy .\\build \"..\\..\\part3\\phonebook backend\\build\" /i /E",
     "deploy": "cd ../.. && git subtree push --prefix \"part3/phonebook backend\" heroku master",
     "deploy:full": "npm run build:ui && git add . && git commit -m \"uibuild\" && git push && npm run deploy",
-    "logs:prod": "heroku logs --tail"
+    "logs:prod": "heroku logs --tail",
+    "lint": "eslint ."
   },
   "author": "Jarrod Freeman",
   "license": "MIT",
@@ -23,6 +24,7 @@
     "morgan": "^1.9.1"
   },
   "devDependencies": {
+    "eslint": "^6.1.0",
     "nodemon": "^1.19.1"
   }
 }
