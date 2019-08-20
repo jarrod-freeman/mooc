@@ -73,7 +73,7 @@ describe('favorite blog', () => {
         delete expectedResult.id;
         delete expectedResult.url;
 
-        expect(listHelper.favoriteBlog([blogs[0]])).toEqual(expectedResult)
+        expect(listHelper.favoriteBlog([blogs[0]])).toEqual(expectedResult);
     });
 
     test('when list has many favorite blog is returned', () => {
@@ -85,7 +85,7 @@ describe('favorite blog', () => {
     });
 
     test('when list has many and multiple blogs are favorite then first favorite is returned', () => {
-        let blogsWithMultipleFavorites = blogs;
+        let blogsWithMultipleFavorites = [...blogs];
 
         blogsWithMultipleFavorites.push({
             id: '5a422bc61b54a676234d17fc',
@@ -100,5 +100,29 @@ describe('favorite blog', () => {
         delete expectedResult.url;
 
         expect(listHelper.favoriteBlog(blogsWithMultipleFavorites)).toEqual(expectedResult);
+    });
+});
+
+describe('most blogs', () => {
+    test('when list is empty returns undefined', () => {
+        expect(listHelper.mostBlogs([])).toBeUndefined();
+    });
+
+    test('when list has only one blog then that author is returned', () => {
+        const expectedResult = {
+            author: blogs[0].author,
+            blogs: 1
+        };
+
+        expect(listHelper.mostBlogs([blogs[0]])).toEqual(expectedResult);
+    });
+
+    test('when list has many and there exists an author with more blogs then that author is returned', () => {
+        let expected = {
+            author: 'Robert C. Martin',
+            blogs: 3
+        };
+
+        expect(listHelper.mostBlogs(blogs)).toEqual(expected);
     });
 });
