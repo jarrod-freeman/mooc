@@ -30,7 +30,7 @@ const favoriteBlog = (blogs) => {
     return favorite;
 };
 
-const mostBlogs= (blogs) => {
+const mostBlogs = (blogs) => {
     const authorReducer = (results, item) => {
         let authorResult = results.filter((x) => x.author === item.author);
 
@@ -62,9 +62,40 @@ const mostBlogs= (blogs) => {
     return mostBlog;
 };
 
+const mostLikes = (blogs) => {
+    const likesPerAuthor = (results, item) => {
+        let result = results.filter(x => x.author === item.author);
+
+        if(result.length === 0){
+            results.push({
+                author: item.author,
+                likes: item.likes
+            });
+        }
+        else{
+            result[0].likes += item.likes;
+        }
+
+        return results;
+    };
+
+    let mostLikes = undefined;
+
+    if(blogs.length !== 0){
+        const mostLikedReducer = (most, item) => {
+            return item.likes > most.likes ? item : most;
+        };
+
+        mostLikes = blogs.reduce(likesPerAuthor, []).reduce(mostLikedReducer);
+    }
+
+    return mostLikes;
+};
+
 module.exports = {
     dummy,
     totalLikes,
     favoriteBlog,
-    mostBlogs
+    mostBlogs,
+    mostLikes
 };

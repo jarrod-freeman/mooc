@@ -126,3 +126,27 @@ describe('most blogs', () => {
         expect(listHelper.mostBlogs(blogs)).toEqual(expected);
     });
 });
+
+describe('most liked', () => {
+    test('when list is empty returns undefined', () => {
+        expect(listHelper.mostLikes([])).toBeUndefined();
+    });
+
+    test('when list has only one blog then that author is returned', () => {
+        const expectedResult = {
+            author: blogs[0].author,
+            likes: blogs[0].likes
+        };
+
+        expect(listHelper.mostLikes([blogs[0]])).toEqual(expectedResult);
+    });
+
+    test('when list has many blogs then the correct author and likes is returned', () => {
+        const expectedResult = {
+            author: 'Edsger W. Dijkstra',
+            likes: 17
+        };
+
+        expect(listHelper.mostLikes(blogs)).toEqual(expectedResult);
+    });
+});
