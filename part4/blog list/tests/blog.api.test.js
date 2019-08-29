@@ -25,6 +25,12 @@ test('all notes are returned', async () => {
     expect(response.body.length).toBe(6);
 });
 
+test('blogs are returned with an id property', async () => {
+    const response = await api.get('/api/blogs');
+
+    expect(response.body[0].id).toBeDefined();
+});
+
 afterAll(() => {
     mongoose.connection.close();
 });
