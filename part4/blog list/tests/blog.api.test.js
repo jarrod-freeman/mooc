@@ -54,6 +54,25 @@ test('a new blog post can be created', async () => {
     expect(response.body.length).toBe(helper.initalBlogs.length + 1);
 });
 
+test('a new blog will default to 0 likes if the likes property is missing', async () => {
+    const blog = {
+        title: 'A new blog',
+        author: 'Author Name',
+        url: 'google.com'
+    };
+
+    const postResponse = await api.post('/api/blogs')
+        .send(blog)
+        .expect(201)
+        .expect('Content-Type', /application\/json/);
+
+    expect(postResponse.body.likes).toBe(0);
+
+    const response = await api.get('/api/blogs');
+
+    expect(response.body[helper.initalBlogs.length].likes).toBe(0);
+});
+
 afterAll(() => {
     mongoose.connection.close();
 });
