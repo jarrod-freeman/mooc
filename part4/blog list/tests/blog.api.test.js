@@ -73,6 +73,17 @@ test('a new blog will default to 0 likes if the likes property is missing', asyn
     expect(response.body[helper.initalBlogs.length].likes).toBe(0);
 });
 
+test('creating a new blog will fail if title and url are missing', async () => {
+    const blog = {
+        author: 'Author Name',
+        likes: 1
+    };
+
+    await api.post('/api/blogs')
+        .send(blog)
+        .expect(400);
+});
+
 afterAll(() => {
     mongoose.connection.close();
 });
