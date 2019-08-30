@@ -85,8 +85,22 @@ test('creating a new blog will fail if title and url are missing', async () => {
 });
 
 test('a blog can be deleted', async () => {
-    await api.delete(`/api/blogs/${helper.initalBlogs[0].id}`)
+    await api.delete(`/api/blogs/${helper.initalBlogs[0]._id}`)
         .expect(204);
+});
+
+test('a blog can be updated with new properties', async () => {
+    let blogToUpdate = helper.initalBlogs[0];
+
+    blogToUpdate.likes = 11;
+
+    const response = await api.put(`/api/blogs/${blogToUpdate._id}`)
+        .send(blogToUpdate);
+
+    blogToUpdate.id = blogToUpdate._id;
+    delete blogToUpdate._id;
+
+    expect(response.body).toEqual(blogToUpdate);
 });
 
 afterAll(() => {
