@@ -84,6 +84,11 @@ test('creating a new blog will fail if title and url are missing', async () => {
         .expect(400);
 });
 
+test('a blog can be deleted', async () => {
+    await api.delete(`/api/blogs/${helper.initalBlogs[0].id}`)
+        .expect(204);
+});
+
 afterAll(() => {
     mongoose.connection.close();
 });
