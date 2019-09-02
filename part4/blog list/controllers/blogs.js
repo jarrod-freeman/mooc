@@ -1,5 +1,5 @@
 const blogsRouter = require('express').Router();
-const Blog = require('../models/blogs');
+const Blog = require('../models/blog');
 
 blogsRouter.get('/', async (request, response, next) => {
     try{
@@ -24,7 +24,6 @@ blogsRouter.post('/', async (request, response, next) => {
 });
 
 blogsRouter.put('/:id', async (request, response, next) => {
-    console.log('testing');
     const body = request.body;
 
     const blog = {
