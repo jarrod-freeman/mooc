@@ -20,6 +20,20 @@ describe('login api', () => {
         await user.save();
     });
 
+    test('login fails if username/password is incorrect', async () => {
+        const loginUser = {
+            username: 'root',
+            password: 'wrongPassword'
+        };
+
+        const result = await api.post('/api/login')
+            .send(loginUser)
+            .expect(401)
+            .expect('Content-Type', /application\/json/);
+
+        expect(result.body.error).toBe('invalid username or password');
+    });
+
     test('a token is returned when a user successfully logs in', async () => {
         const loginUser = {
             username: 'root',
