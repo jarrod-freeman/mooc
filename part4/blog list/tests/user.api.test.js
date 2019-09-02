@@ -1,3 +1,4 @@
+const mongoose = require('mongoose');
 const User = require('../models/user');
 const helper = require('./test_helper');
 const supertest = require('supertest');
@@ -7,6 +8,7 @@ const api = supertest(app);
 describe('when there is initially one user in the db', () => {
     beforeEach(async () => {
         await User.deleteMany({});
+
         const user = new User({ name: 'superuser', username: 'root', password: 'secret' });
         await user.save();
     });
@@ -21,7 +23,7 @@ describe('when there is initially one user in the db', () => {
         const usersAtStart = await helper.usersInDB();
 
         const response = await api.get('/api/users');
-        
+
         const users = response.body;
 
         expect(users.length).toBe(usersAtStart.length);
@@ -129,5 +131,9 @@ describe('when there is initially one user in the db', () => {
 
         const usersAtEnd = await helper.usersInDB();
         expect(usersAtEnd.length).toBe(usersAtStart.length);
+    });
+
+    afterAll(() => {
+        mongoose.connection.close();
     });
 });
