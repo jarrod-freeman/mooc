@@ -108,7 +108,19 @@ describe('blog api tests', () => {
     });
 
     test('a blog can be deleted', async () => {
-        await api.delete(`/api/blogs/${helper.initalBlogs[0]._id}`)
+        const blog = {
+            title: 'A new blog',
+            author: 'Author Name',
+            url: 'google.com',
+            likes: 5
+        };
+
+        const postResponse = await api.post('/api/blogs')
+            .set('authorization', `bearer ${token}`)
+            .send(blog);
+
+        await api.delete(`/api/blogs/${postResponse.body.id}`)
+            .set('authorization', `bearer ${token}`)
             .expect(204);
     });
 
