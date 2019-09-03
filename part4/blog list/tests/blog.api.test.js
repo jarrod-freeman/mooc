@@ -6,7 +6,23 @@ const Blog = require('../models/blog');
 //const User = require('../models/user');
 const helper = require('./test_helper');
 
+let token = null;
+
 describe('blog api tests', () => {
+    beforeAll(async (done) => {
+        const loginUser = {
+            username: 'root',
+            password: 'secret'
+        };
+
+        const result = await api.post('/api/login')
+            .send(loginUser);
+
+        token = result.body.token;
+
+        done();
+    });
+
     beforeEach(async () => {
         await Blog.deleteMany({});
 
@@ -44,6 +60,7 @@ describe('blog api tests', () => {
         };
 
         const postResponse = await api.post('/api/blogs')
+            .set('authorization', `bearer ${token}`)
             .send(blog)
             .expect(201)
             .expect('Content-Type', /application\/json/);
@@ -66,6 +83,7 @@ describe('blog api tests', () => {
         };
 
         const postResponse = await api.post('/api/blogs')
+            .set('authorization', `bearer ${token}`)
             .send(blog)
             .expect(201)
             .expect('Content-Type', /application\/json/);
@@ -84,6 +102,7 @@ describe('blog api tests', () => {
         };
 
         await api.post('/api/blogs')
+            .set('authorization', `bearer ${token}`)
             .send(blog)
             .expect(400);
     });
