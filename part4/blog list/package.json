@@ -7,7 +7,8 @@
     "start": "cross-env NODE_ENV=production node index.js",
     "watch": "cross-env NODE_ENV=development nodemon index.js",
     "test": "cross-env NODE_ENV=test jest --verbose",
-    "lint": "eslint ."
+    "lint": "eslint .",
+    "build:ui": "rmdir build /S /Q && cd ../../part5/bloglist-frontend && npm run build --prod && xcopy .\\build \"..\\..\\part4\\blog list\\build\" /i /E"
   },
   "author": "Jarrod Freeman",
   "license": "MIT",
