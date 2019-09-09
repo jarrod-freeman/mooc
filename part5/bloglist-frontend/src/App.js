@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Blog from './components/Blog';
 import BlogForm from './components/BlogForm';
+import Togglable from './components/Togglable';
 import Notification from './components/Notification';
 import loginService from './services/login';
 import blogService from './services/blogs';
@@ -12,6 +13,8 @@ const App = () => {
     const [blogs, setBlogs] = useState([]);
     const [message, setMessage] = useState(null);
     const [messageType, setMessageType] = useState(null);
+
+    const newBlogRef = React.createRef();
 
     useEffect(() => {
         if(user){
@@ -74,6 +77,8 @@ const App = () => {
             const newBlog = await blogService.create(blog);
             const blogList = blogs.concat(newBlog);
 
+            newBlogRef.current.toggleVisibility();
+
             setMessageType('notification');
             setMessage(`a new blog ${newBlog.title} by ${newBlog.author} added`);
 
@@ -84,8 +89,14 @@ const App = () => {
             }, 5000);
         }
         catch(exception){
-            setMessageType('error');
-            setMessage(exception.response.data.error);
+            if(exception.response && exception.response.data){
+                setMessageType('error');
+                setMessage(exception.response.data.error);
+            }
+            else{
+                setMessageType('error');
+                setMessage(exception.message);
+            }
 
             setTimeout(() => {
                 setMessage(null);
@@ -137,7 +148,9 @@ const App = () => {
                     <button onClick={handleLogout}>logout</button>
                 </p>
 
-                <BlogForm formSubmit={handleCreateBlog} />
+                <Togglable buttonLabel="new blog" ref={newBlogRef}>
+                    <BlogForm formSubmit={handleCreateBlog} />
+                </Togglable>
 
                 {
                     blogs.map(blog => <Blog key={blog.id} blog={blog} />)
