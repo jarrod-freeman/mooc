@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 const Blog = ({ blog, user, updateBlog, deleteBlog }) => {
     const [detailsVisible, setDetailsVisible] = useState(false);
-    
+
     const showWhenVisible = { display: detailsVisible ? '' : 'none' };
 
     const blogStyle = {
@@ -14,11 +14,11 @@ const Blog = ({ blog, user, updateBlog, deleteBlog }) => {
         marginBottom: 5
     };
 
-    const handleBlogClicked = (e) => {
+    const handleBlogClicked = () => {
         setDetailsVisible(!detailsVisible);
     };
 
-    const handleLikeClicked = (e) => {
+    const handleLikeClicked = () => {
         const blogToUpdate = {
             id: blog.id,
             user: blog.user.id,
@@ -30,7 +30,7 @@ const Blog = ({ blog, user, updateBlog, deleteBlog }) => {
         updateBlog(blogToUpdate);
     };
 
-    const handleDeleteClicked = (e) => {
+    const handleDeleteClicked = () => {
         if(window.confirm(`remove blog ${blog.title} by ${blog.author}?`)){
             deleteBlog(blog.id);
         }
@@ -64,4 +64,4 @@ Blog.propTypes = {
     deleteBlog: PropTypes.func.isRequired
 };
 
-export default Blog
+export default Blog;

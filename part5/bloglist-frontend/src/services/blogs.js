@@ -29,11 +29,11 @@ const createBlog = async (blog) => {
 const updateBlog = async (blog) => {
     const response = await axios.put(`${baseUrl}/${blog.id}`, blog, getConfig());
     return response.data;
-}
+};
 
 const deleteBlog = async(id) => {
     const response = await axios.delete(`${baseUrl}/${id}`, getConfig());
     return response.data;
-}
+};
 
-export default { setToken, getAll, createBlog, updateBlog, deleteBlog }
+export default { setToken, getAll, createBlog, updateBlog, deleteBlog };

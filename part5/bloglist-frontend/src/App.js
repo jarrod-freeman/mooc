@@ -27,9 +27,6 @@ const App = () => {
                     setBlogs(returnedBlogs);
                 });
         }
-        else{
-            
-        }
     }, [user]);
 
     useEffect(() => {
@@ -52,7 +49,7 @@ const App = () => {
             });
 
             window.localStorage.setItem('loggedInUser', JSON.stringify(user));
-            
+
             blogService.setToken(user.token);
             setUser(user);
             setUsername('');
@@ -111,7 +108,7 @@ const App = () => {
     const handleUpdateBlog = async (blogToUpdate) => {
         try{
             const updatedBlog = await blogService.updateBlog(blogToUpdate);
-            
+
             setBlogs(blogs.map(blog => blog.id !== updatedBlog.id ? blog : updatedBlog));
         }
         catch(exception){
@@ -157,24 +154,24 @@ const App = () => {
                 <h2>log in to application</h2>
 
                 <Notification message={message} messageType={messageType} />
-                
+
                 <form onSubmit={handleLogin}>
                     <div>
                         username
                         <input
-                        type="text"
-                        value={username}
-                        name="Username"
-                        onChange={({ target }) => setUsername(target.value)}
+                            type="text"
+                            value={username}
+                            name="Username"
+                            onChange={({ target }) => setUsername(target.value)}
                         />
                     </div>
                     <div>
                         password
                         <input
-                        type="password"
-                        value={password}
-                        name="Password"
-                        onChange={({ target }) => setPassword(target.value)}
+                            type="password"
+                            value={password}
+                            name="Password"
+                            onChange={({ target }) => setPassword(target.value)}
                         />
                     </div>
                     <button type="submit">login</button>
@@ -205,19 +202,19 @@ const App = () => {
                         .map(blog => <Blog key={blog.id} blog={blog} user={user} updateBlog={handleUpdateBlog} deleteBlog={handleDeleteBlog} />)
                 }
             </div>
-        )
+        );
     };
 
     return (
         <div>
-            
+
 
             {
                 user === null ?
-                loginForm() :
-                <div>
-                    {displayBlogs()}
-                </div>
+                    loginForm() :
+                    <div>
+                        {displayBlogs()}
+                    </div>
             }
         </div>
     );

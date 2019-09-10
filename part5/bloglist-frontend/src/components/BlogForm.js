@@ -19,25 +19,25 @@ const BlogForm = ({ formSubmit }) => {
         setUrl('');
 
         formSubmit(blog);
-    }
+    };
 
     return (
         <div>
             <h2>create new</h2>
             <div>
-                title: 
+                title:
                 <input type="text"
                     onChange={(e) => setTitle(e.target.value)}
                     value={title} />
             </div>
             <div>
-                author: 
+                author:
                 <input type="text"
                     onChange={(e) => setAuthor(e.target.value)}
                     value={author} />
             </div>
             <div>
-                url: 
+                url:
                 <input type="text"
                     onChange={(e) => setUrl(e.target.value)}
                     value={url} />
