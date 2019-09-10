@@ -16,6 +16,10 @@ const App = () => {
 
     const newBlogRef = React.createRef();
 
+    const blogComparer = (a, b) => {
+        return b.likes - a.likes;
+    };
+
     useEffect(() => {
         if(user){
             blogService.getAll()
@@ -175,7 +179,9 @@ const App = () => {
                 </Togglable>
 
                 {
-                    blogs.map(blog => <Blog key={blog.id} blog={blog} updateBlog={handleUpdateBlog} />)
+                    blogs
+                        .sort(blogComparer)
+                        .map(blog => <Blog key={blog.id} blog={blog} updateBlog={handleUpdateBlog} />)
                 }
             </div>
         )
