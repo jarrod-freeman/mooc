@@ -202,7 +202,7 @@ const App = () => {
                 {
                     blogs
                         .sort(blogComparer)
-                        .map(blog => <Blog key={blog.id} blog={blog} updateBlog={handleUpdateBlog} deleteBlog={handleDeleteBlog} />)
+                        .map(blog => <Blog key={blog.id} blog={blog} user={user} updateBlog={handleUpdateBlog} deleteBlog={handleDeleteBlog} />)
                 }
             </div>
         )

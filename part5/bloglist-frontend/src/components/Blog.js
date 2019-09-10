@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 
-const Blog = ({ blog, updateBlog, deleteBlog }) => {
+const Blog = ({ blog, user, updateBlog, deleteBlog }) => {
     const [detailsVisible, setDetailsVisible] = useState(false);
-
+    
     const showWhenVisible = { display: detailsVisible ? '' : 'none' };
 
     const blogStyle = {
@@ -50,7 +50,7 @@ const Blog = ({ blog, updateBlog, deleteBlog }) => {
                 <div>
                     added by {blog.author}
                 </div>
-                <button onClick={handleDeleteClicked}>delete</button>
+                {blog.user && blog.user.username === user.username && <button onClick={handleDeleteClicked}>delete</button>}
             </div>
         </div>
     );
