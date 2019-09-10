@@ -78,7 +78,7 @@ const App = () => {
 
     const handleCreateBlog = async (blog) => {
         try{
-            const newBlog = await blogService.create(blog);
+            const newBlog = await blogService.createBlog(blog);
             const blogList = blogs.concat(newBlog);
 
             newBlogRef.current.toggleVisibility();
@@ -110,9 +110,30 @@ const App = () => {
 
     const handleUpdateBlog = async (blogToUpdate) => {
         try{
-            const updatedBlog = await blogService.update(blogToUpdate);
+            const updatedBlog = await blogService.updateBlog(blogToUpdate);
             
             setBlogs(blogs.map(blog => blog.id !== updatedBlog.id ? blog : updatedBlog));
+        }
+        catch(exception){
+            if(exception.response && exception.response.data){
+                setMessageType('error');
+                setMessage(exception.response.data.error);
+            }
+            else{
+                setMessageType('error');
+                setMessage(exception.message);
+            }
+
+            setTimeout(() => {
+                setMessage(null);
+            }, 5000);
+        }
+    };
+
+    const handleDeleteBlog = async (id) => {
+        try{
+            await blogService.deleteBlog(id);
+            setBlogs(blogs.filter(blog => blog.id !== id));
         }
         catch(exception){
             if(exception.response && exception.response.data){
@@ -181,7 +202,7 @@ const App = () => {
                 {
                     blogs
                         .sort(blogComparer)
-                        .map(blog => <Blog key={blog.id} blog={blog} updateBlog={handleUpdateBlog} />)
+                        .map(blog => <Blog key={blog.id} blog={blog} updateBlog={handleUpdateBlog} deleteBlog={handleDeleteBlog} />)
                 }
             </div>
         )
