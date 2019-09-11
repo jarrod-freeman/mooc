@@ -38,17 +38,17 @@ const Blog = ({ blog, user, updateBlog, deleteBlog }) => {
 
     return (
         <div style={blogStyle}>
-            <div onClick={handleBlogClicked}>
+            <div className='blogTitle' onClick={handleBlogClicked}>
                 {blog.title}
             </div>
-            <div style={showWhenVisible}>
+            <div className='blogInfo' style={showWhenVisible}>
                 <div>
                     {blog.url}
                 </div>
                 <div>
                     {blog.likes} likes <button onClick={handleLikeClicked}>like</button>
                 </div>
-                <div>
+                <div className='blogAuthor'>
                     added by {blog.author}
                 </div>
                 {blog.user && blog.user.username === user.username && <button onClick={handleDeleteClicked}>delete</button>}
