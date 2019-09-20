@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useField } from './hooks';
 import Blog from './components/Blog';
 import BlogForm from './components/BlogForm';
 import Togglable from './components/Togglable';
@@ -7,8 +8,8 @@ import loginService from './services/login';
 import blogService from './services/blogs';
 
 const App = () => {
-    const [username, setUsername] = useState('');
-    const [password, setPassword] = useState('');
+    const username = useField('text');
+    const password = useField('password');
     const [user, setUser] = useState(null);
     const [blogs, setBlogs] = useState([]);
     const [message, setMessage] = useState(null);
@@ -44,16 +45,14 @@ const App = () => {
 
         try{
             const user = await loginService.login({
-                username,
-                password
+                username: username.value,
+                password: password.value
             });
 
             window.localStorage.setItem('loggedInUser', JSON.stringify(user));
 
             blogService.setToken(user.token);
             setUser(user);
-            setUsername('');
-            setPassword('');
         }
         catch(exception){
             setMessageType('error');
@@ -158,21 +157,11 @@ const App = () => {
                 <form onSubmit={handleLogin}>
                     <div>
                         username
-                        <input
-                            type="text"
-                            value={username}
-                            name="Username"
-                            onChange={({ target }) => setUsername(target.value)}
-                        />
+                        <input {...username} />
                     </div>
                     <div>
                         password
-                        <input
-                            type="password"
-                            value={password}
-                            name="Password"
-                            onChange={({ target }) => setPassword(target.value)}
-                        />
+                        <input {...password} />
                     </div>
                     <button type="submit">login</button>
                 </form>
