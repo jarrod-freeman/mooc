@@ -159,11 +159,11 @@ const App = () => {
                 <form onSubmit={handleLogin}>
                     <div>
                         username
-                        <input {...username} />
+                        <input {...username} reset={null} />
                     </div>
                     <div>
                         password
-                        <input {...password} />
+                        <input {...password} reset={null} />
                     </div>
                     <button type="submit">login</button>
                 </form>

@@ -27,15 +27,15 @@ const BlogForm = ({ formSubmit }) => {
             <h2>create new</h2>
             <div>
                 title:
-                <input {...title} />
+                <input {...title} reset={null} />
             </div>
             <div>
                 author:
-                <input {...author} />
+                <input {...author} reset={null} />
             </div>
             <div>
                 url:
-                <input {...url} />
+                <input {...url} reset={null} />
             </div>
             <button onClick={handleCreate}>create</button>
         </div>
