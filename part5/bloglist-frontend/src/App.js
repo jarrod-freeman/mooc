@@ -53,6 +53,8 @@ const App = () => {
 
             blogService.setToken(user.token);
             setUser(user);
+            username.reset();
+            password.reset();
         }
         catch(exception){
             setMessageType('error');

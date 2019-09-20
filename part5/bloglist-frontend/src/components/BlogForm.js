@@ -1,22 +1,23 @@
-import React, { useState } from 'react';
+import React from 'react';
+import { useField } from '../hooks';
 
 const BlogForm = ({ formSubmit }) => {
-    const [title, setTitle] = useState('');
-    const [author, setAuthor] = useState('');
-    const [url, setUrl] = useState('');
+    const title = useField('text');
+    const author = useField('text');
+    const url = useField('text');
 
     const handleCreate = (event) => {
         event.preventDefault();
 
         const blog = {
-            title,
-            author,
-            url
+            title: title.value,
+            author: author.value,
+            url: url.value
         };
 
-        setTitle('');
-        setAuthor('');
-        setUrl('');
+        title.reset();
+        author.reset();
+        url.reset();
 
         formSubmit(blog);
     };
@@ -26,21 +27,15 @@ const BlogForm = ({ formSubmit }) => {
             <h2>create new</h2>
             <div>
                 title:
-                <input type="text"
-                    onChange={(e) => setTitle(e.target.value)}
-                    value={title} />
+                <input {...title} />
             </div>
             <div>
                 author:
-                <input type="text"
-                    onChange={(e) => setAuthor(e.target.value)}
-                    value={author} />
+                <input {...author} />
             </div>
             <div>
                 url:
-                <input type="text"
-                    onChange={(e) => setUrl(e.target.value)}
-                    value={url} />
+                <input {...url} />
             </div>
             <button onClick={handleCreate}>create</button>
         </div>
